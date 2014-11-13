@@ -2,14 +2,13 @@
 # vim: set fileencoding=utf-8 expandtab shiftwidth=4 tabstop=4 softtabstop=4:
 
 # A library for controlling TM1638 displays from a Raspberry Pi
-# Based on https://code.google.com/p/tm1638-library/
-# (Not all functionality translated.)
-
-# Jacek Fedorynski <jfedor@jfedor.org>
+# Based on original work in C from https://code.google.com/p/tm1638-library/
+# Converted to python by Jacek Fedorynski <jfedor@jfedor.org> (common cathode)
+# Converted for TM1638 common anode by John Blackmore <john@johnblackmore.com>
 
 import RPi.GPIO as GPIO
 
-GPIO.setwarnings(False)
+GPIO.setwarnings(False) # suppresses warnings on RasPi
 
 
 class TM1638(object):
