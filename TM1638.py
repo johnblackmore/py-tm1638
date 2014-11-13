@@ -80,23 +80,21 @@ class TM1638(object):
             self.send_char(i, self.get_bit_mask(pos, digit, i), dot)
     
     def get_bit_mask(self, pos, digit, bit):
-    	return ((self.FONT[digit] >> bit) & 1) << pos
+        return ((self.FONT[digit] >> bit) & 1) << pos
 
     def set_text(self, text):
         text = text[0:8]
         text = text[::-1]
         text += " "*(8-len(text))
-        #text = text[4:]+text[:4]
         for i in range(0, 7):
             byte = 0b00000000;
             for pos in range(8):
                 c = text[pos]
                 if c == 'c':
-                   byte = (byte | self.get_bit_mask(pos, 10, i)) 
+                     byte = (byte | self.get_bit_mask(pos, 10, i))
                 elif c != ' ':
-                   byte = (byte | self.get_bit_mask(pos, int(c), i))
+                     byte = (byte | self.get_bit_mask(pos, int(c), i))
             self.send_char(i, self.rotate_bits(byte))
-            #self.send_char(i, byte)
 
     def receive(self):
         temp = 0
@@ -128,6 +126,6 @@ class TM1638(object):
         num &= (2**bits-1)
         bit = num & 1
         num >>= 1
-        if(bit):
+        if bit:
             num |= (1 << (bits-1))
         return num
