@@ -77,13 +77,20 @@ class TM1638(object):
         self.send_data(pos << 1, data | (128 if dot else 0))
 
     def set_digit(self, pos, digit, dot=False):
-        for i in range(0, 7):
+        for i in range(0, 6):
             self.send_char(i, self.get_bit_mask(pos, digit, i), dot)
     
     def get_bit_mask(self, pos, digit, bit):
         return ((self.FONT[digit] >> bit) & 1) << pos
 
     def set_text(self, text):
+        dots = 0b00000000
+        pos = text.find('.')
+        if pos != -1:
+            dots = dots | (128 >> pos+(8-len(text)))
+            text = text.replace('.', '')
+
+        self.send_char(7, self.rotate_bits(dots))
         text = text[0:8]
         text = text[::-1]
         text += " "*(8-len(text))

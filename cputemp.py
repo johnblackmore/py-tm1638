@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# TM1638 playground
+# CPU Temp
+# Grabs the RasPi cpu temp and outputs to TM1638 display to 1 decimal place
 
 import TM1638
 import time
@@ -20,6 +21,6 @@ while True:
     res = os.popen('cat /sys/class/thermal/thermal_zone0/temp').readline()
     res = res.replace('\n', '')
     #print "%0.1fc" % (float(res)/1000)
-    display.set_text("%0.0fc" % (float(res)/1000))
+    display.set_text("%0.1fc" % (float(res)/1000))
     time.sleep(2)
 
