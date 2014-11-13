@@ -11,6 +11,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setwarnings(False)
 
+
 class TM1638(object):
 
     FONT = [
@@ -91,9 +92,9 @@ class TM1638(object):
             for pos in range(8):
                 c = text[pos]
                 if c == 'c':
-                     byte = (byte | self.get_bit_mask(pos, 10, i))
+                    byte = (byte | self.get_bit_mask(pos, 10, i))
                 elif c != ' ':
-                     byte = (byte | self.get_bit_mask(pos, int(c), i))
+                    byte = (byte | self.get_bit_mask(pos, int(c), i))
             self.send_char(i, self.rotate_bits(byte))
 
     def receive(self):
@@ -118,7 +119,7 @@ class TM1638(object):
         return keys
 
     def rotate_bits(self, num):
-        for i in range(0,4):
+        for i in range(0, 4):
             num = self.rotr(num, 8)
         return num
 
