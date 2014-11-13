@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-# CPU Temp
-# Grabs the RasPi cpu temp and outputs to TM1638 display to 1 decimal place
+# Load Average
+# Grabs the RasPi 1 minute load average outputs to TM1638 display, updates every 2 secs
 
 import TM1638
 import time
@@ -18,9 +18,10 @@ display = TM1638.TM1638(DIO, CLK, STB)
 display.enable(1)
 
 while True:
-    res = os.popen('cat /sys/class/thermal/thermal_zone0/temp').readline()
+    res = os.popen('uptime').readline()
     res = res.replace('\n', '')
-    #print "%0.1fc" % (float(res)/1000)
-    display.set_text("CPU %0.1fc" % (float(res)/1000))
+    pos = res.index('age:')
+    load = res[pos+5:pos+9]
+    display.set_text("load %s" % (load))
     time.sleep(2)
 
